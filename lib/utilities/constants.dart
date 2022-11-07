@@ -1,4 +1,4 @@
-const String baseURL = "https://magdsoft-internship.herokuapp.com/api";
+const String host = "magdsoft-internship.herokuapp.com";
 const String verifyPhoneEndPoint = "/verifyPhone";
 const String  otpEndPoint = "/otp";
 const String getHelpEndPoint = "/getHelp";
