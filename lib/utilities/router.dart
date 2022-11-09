@@ -15,7 +15,8 @@ Route<dynamic> onGenerate(RouteSettings settings) {
 
     case AppRoutes.otp:
       final phone = settings.arguments as String ;
-      return MaterialPageRoute(builder: (context) => OTP(num: phone,));
+      final code = settings.arguments as String ;
+      return MaterialPageRoute(builder: (context) => OTP(num: phone,code: code));
 
     default:
       return MaterialPageRoute(builder: ((context) => Home()));

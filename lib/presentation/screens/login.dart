@@ -1,6 +1,8 @@
+import 'package:electronicsstrore/business_logic/cubit/auth_cubit.dart';
 import 'package:electronicsstrore/presentation/widgets/TFF.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_number/phone_number.dart';
 import 'package:lottie/lottie.dart';
 import '../../utilities/routes.dart';
@@ -23,6 +25,7 @@ class _LoginState extends State<Login> {
       const CountryCode(name: 'Egypt', code: 'EG', dialCode: '+20');
   @override
   Widget build(BuildContext context) {
+    final loginData = BlocProvider.of<AuthCubit>(context).verifyPhoneModel;
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
@@ -55,9 +58,17 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: CustomTextFormField(
+                  controller: _name,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "name is Required";
+                    }
+                    return null;
+                  },
                   hintText: "Enter your Name",
                 ),
               ),
@@ -70,6 +81,14 @@ class _LoginState extends State<Login> {
                 width: double.infinity,
                 height: 67,
                 child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Phone is Required";
+                    } else if (value.length < 10) {
+                      return "phone number must be more than 10 and less than 15";
+                    }
+                    return null;
+                  },
                   controller: _phone,
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.done,
@@ -115,64 +134,52 @@ class _LoginState extends State<Login> {
                 ),
               ),
               SizedBox(
-                height: 30,
-                child: Text(
-                  errorMsg,
-                  style: TextStyle(
-                    color: Colors.red[600],
-                  ),
-                ),
-              ),
-              SizedBox(
                 height: 45,
                 width: 150,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_phone.text.isEmpty || _phone.text.length < 9) {
-                      setState(() {
-                        errorMsg = 'Please enter the number correctly';
-                      });
-                    } else {
-                      String phoneNo = countryFlag!.dialCode + _phone.text;
-                      String formatted;
-                      try {
-                        bool isValid =
-                            await PhoneNumberUtil().validate(phoneNo);
-                        formatted = await PhoneNumberUtil()
-                            .format(phoneNo, countryFlag!.dialCode);
-                        PhoneNumber phoneNumber =
-                            await PhoneNumberUtil().parse(phoneNo);
-                      } catch (_) {
-                        setState(() {
-                          errorMsg = 'Please enter the number correctly';
-                        });
-                      }
+                child: BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    return state is AuthLoaded
+                        ? ElevatedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                await BlocProvider.of<AuthCubit>(context)
+                                    .verifyPhone(
+                                        name: _name.text, phone: _phone.text)
+                                    .then((value) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(state.data.message),
+                                    ),
+                                  );
 
-                      if (await PhoneNumberUtil().validate(phoneNo) == false) {
-                        setState(() {
-                          errorMsg = 'Please enter the number correctly';
-                        });
-                      } else {
-                        setState(() {
-                          errorMsg = '';
-                        });
-                        Navigator.pushReplacementNamed(context, AppRoutes.otp,
-                            arguments: _phone.text);
-                      }
-                    }
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    AppRoutes.otp,
+                                    arguments: {
+                                      "num": _phone.text.toString(),
+                                      "code": state.data.code
+                                    },
+                                  );
+                                });
+                              }
+                            },
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              )),
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color?>(
+                                      const Color.fromRGBO(7, 9, 77, 1)),
+                            ),
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : const Center(child: CircularProgressIndicator());
                   },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    )),
-                    backgroundColor: MaterialStateProperty.all<Color?>(
-                        const Color.fromRGBO(7, 9, 77, 1)),
-                  ),
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
                 ),
               )
             ],

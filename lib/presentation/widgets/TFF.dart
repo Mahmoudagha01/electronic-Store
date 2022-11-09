@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
     TextInputType keyboardType = TextInputType.name,
     Widget? suffixIcon,
     void Function(String)? onChanged,
+     String? Function(String?)? validator,
     double borderRadius = 10.0,
     bool autofocus = false,
     TextAlign textAlign = TextAlign.start,
@@ -23,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
         _textAlign = textAlign,
         _suffixIcon = suffixIcon,
         _readOnly = readOnly,
+        _validator =validator,
         super(key: key);
 
   final TextEditingController? _controller;
@@ -35,6 +37,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextAlign _textAlign;
   final Widget? _suffixIcon;
   final bool _readOnly;
+  final String? Function(String?)? _validator;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -49,6 +53,7 @@ class CustomTextFormField extends StatelessWidget {
         textInputAction: _textInputAction,
         controller: _controller,
         keyboardType: _keyboardType,
+        validator:_validator ,
         decoration: InputDecoration(
           
             hintText: _hintText,

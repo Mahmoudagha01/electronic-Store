@@ -3,7 +3,6 @@ import 'package:electronicsstrore/data/models/verifyphone_model.dart';
 
 class AuthRepositery {
   final Auth auth;
-
   AuthRepositery(this.auth);
   Future<VerifyPhoneModel> verifyPhone(
       {required String name, required String phone}) async {
