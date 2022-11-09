@@ -1,11 +1,10 @@
-
-
 class VerifyPhoneModel {
   int status;
   String message;
-  String? code;
+  String code;
 
-  VerifyPhoneModel({required this.status, required this.message, this.code});
+  VerifyPhoneModel(
+      {required this.status, required this.message, required this.code});
 
   factory VerifyPhoneModel.fromJson(Map<String, dynamic> json) =>
       VerifyPhoneModel(

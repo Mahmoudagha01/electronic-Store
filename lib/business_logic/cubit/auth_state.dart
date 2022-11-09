@@ -15,4 +15,8 @@ class AuthLoaded extends AuthState {
   });
 }
 
-class AuthError extends AuthState {}
+class AuthError extends AuthState {
+  final String message;
+
+  AuthError(this.message);
+}

@@ -1,4 +1,5 @@
 import 'package:electronicsstrore/business_logic/cubit/auth_cubit.dart';
+import 'package:electronicsstrore/presentation/screens/otp.dart';
 import 'package:electronicsstrore/presentation/widgets/TFF.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
@@ -136,31 +137,42 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 45,
                 width: 150,
-                child: BlocBuilder<AuthCubit, AuthState>(
+                child: BlocConsumer<AuthCubit, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthLoaded) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            state.data.message,
+                          ),
+                        ),
+                      );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              OTP(num: _phone.text, code: state.data.code),
+                        ),
+                      );
+                    } else if (state is AuthError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            state.message,
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   builder: (context, state) {
-                    return state is AuthLoaded
-                        ? ElevatedButton(
+                    return state is AuthLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 await BlocProvider.of<AuthCubit>(context)
                                     .verifyPhone(
-                                        name: _name.text, phone: _phone.text)
-                                    .then((value) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(state.data.message),
-                                    ),
-                                  );
-
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    AppRoutes.otp,
-                                    arguments: {
-                                      "num": _phone.text.toString(),
-                                      "code": state.data.code
-                                    },
-                                  );
-                                });
+                                        name: _name.text, phone: _phone.text);
                               }
                             },
                             style: ButtonStyle(
@@ -177,11 +189,10 @@ class _LoginState extends State<Login> {
                               'Login',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                          )
-                        : const Center(child: CircularProgressIndicator());
+                          );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),

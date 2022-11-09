@@ -21,7 +21,7 @@ class AuthCubit extends Cubit<AuthState> {
           await authRepositery.verifyPhone(name: name, phone: phone);
       emit(AuthLoaded(data: verifyPhoneModel!));
     } catch (e) {
-      emit(AuthError());
+      emit(AuthError(verifyPhoneModel!.message));
     }
     return verifyPhoneModel;
   }
