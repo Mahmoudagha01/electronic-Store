@@ -4,11 +4,12 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     Key? key,
     TextEditingController? controller,
+    Color? fillcolor,
     String hintText = '',
     TextInputType keyboardType = TextInputType.name,
     Widget? suffixIcon,
     void Function(String)? onChanged,
-     String? Function(String?)? validator,
+    String? Function(String?)? validator,
     double borderRadius = 10.0,
     bool autofocus = false,
     TextAlign textAlign = TextAlign.start,
@@ -24,11 +25,13 @@ class CustomTextFormField extends StatelessWidget {
         _textAlign = textAlign,
         _suffixIcon = suffixIcon,
         _readOnly = readOnly,
-        _validator =validator,
+        _validator = validator,
+        _fillcolor = fillcolor,
         super(key: key);
 
   final TextEditingController? _controller;
   final String _hintText;
+  final Color? _fillcolor;
   final bool _autofocus;
   final TextInputType _keyboardType;
   final void Function(String)? _onChanged;
@@ -41,7 +44,12 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(_borderRadius),
+      ),
+      child: TextFormField(
         style: const TextStyle(
           color: Colors.black,
           fontSize: 16,
@@ -53,15 +61,14 @@ class CustomTextFormField extends StatelessWidget {
         textInputAction: _textInputAction,
         controller: _controller,
         keyboardType: _keyboardType,
-        validator:_validator ,
+        validator: _validator,
         decoration: InputDecoration(
-          
+            fillColor: _fillcolor,
             hintText: _hintText,
             suffixIcon: _suffixIcon,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            
             contentPadding: const EdgeInsets.all(20)),
-      
+      ),
     );
   }
 }

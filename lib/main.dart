@@ -1,13 +1,18 @@
-import 'package:electronicsstrore/business_logic/cubit/auth_cubit.dart';
+import 'package:electronicsstrore/business_logic/Auth/auth_cubit.dart';
+import 'package:electronicsstrore/business_logic/OtpAuth/otp_auth_cubit.dart';
+import 'package:electronicsstrore/data/API/verifyotp_api.dart';
 import 'package:electronicsstrore/data/API/verifyphone_api.dart';
+import 'package:electronicsstrore/data/repository/verifyotp_repo.dart';
 import 'package:electronicsstrore/data/repository/vrifyphone_repo.dart';
+import 'package:electronicsstrore/helper/notification/notifications.dart';
 import 'package:electronicsstrore/utilities/router.dart';
 import 'package:electronicsstrore/utilities/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-    WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().init();
   runApp(const MyApp());
 }
 
@@ -16,8 +21,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(AuthRepositery(Auth())),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthCubit(
+            AuthRepositery(
+              Auth(),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => OtpAuthCubit(
+            OtpRepository(
+              OtpAuth(),
+            ),
+          ),
+        )
+      ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerate,

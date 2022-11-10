@@ -1,12 +1,11 @@
-import 'package:electronicsstrore/business_logic/cubit/auth_cubit.dart';
+import 'package:electronicsstrore/business_logic/Auth/auth_cubit.dart';
 import 'package:electronicsstrore/presentation/screens/otp.dart';
 import 'package:electronicsstrore/presentation/widgets/TFF.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:phone_number/phone_number.dart';
 import 'package:lottie/lottie.dart';
-import '../../utilities/routes.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -120,10 +119,10 @@ class _LoginState extends State<Login> {
                                     : const SizedBox(),
                               ),
                               const SizedBox(
+                                width: 30,
                                 child: Icon(
                                   Icons.arrow_drop_down,
                                 ),
-                                width: 30,
                               ),
                             ],
                           ),
