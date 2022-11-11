@@ -1,6 +1,6 @@
 # **Simple Store App**
 
-You can see a video [Here](https://youtu.be/Znw3dEKN57s)
+You can see a video [Here]()
 
 ## Screenshots
 
