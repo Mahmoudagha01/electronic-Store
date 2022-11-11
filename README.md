@@ -14,9 +14,58 @@ You can see a video [Here](https://youtu.be/Znw3dEKN57s)
 ![photo_2022-11-11_17-58-13](https://user-images.githubusercontent.com/55716560/201380362-8503f9a5-39b0-4f9a-813c-a09f8bc59d0e.jpg)|![photo_2022-11-11_17-59-13](https://user-images.githubusercontent.com/55716560/201380548-4cc02242-f2d9-423e-98f0-cc6143597e7b.jpg)|![photo_2022-11-11_17-59-30](https://user-images.githubusercontent.com/55716560/201380595-e062028f-9ff1-47f9-9edf-e8d5e2ee3a5b.jpg)
 
  ## Project Structure
+```
 lib
 ├── business_logic
-├── core
 ├── data
 ├── presentation
+├── helper
+├── Utilities
 └── main.dart
+```
+
+### business_logic
+This folder containes the business logic of the application specificly state management using BloC Cubit.
+
+```
+business_logic
+├── Auth_cubit
+├── OTPAuth_cubit
+├── Productl_cubit
+└── help_cubit
+```
+
+### data
+This folder contains all data and operations done to that data
+```
+data
+├── Data Source(API)
+├── models
+└── repository
+```
+
+### presentation
+This folder containes everything related to the Ui f the application.
+```
+presentation
+├── screens
+└── widget
+```
+
+### Helper
+This folder containes Network helper , shared Prefereace and Local notifiation.
+```
+helper
+├── local
+├── remote
+└── notification
+```
+
+### Utilities
+This folder containes routing and constants
+```
+presentation
+├── constants.dart
+├── routes.dart
+└── router.dart
+```
