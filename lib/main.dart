@@ -10,6 +10,7 @@ import 'package:electronicsstrore/data/repository/getProduct_repo.dart';
 import 'package:electronicsstrore/data/repository/gethelp_repo.dart';
 import 'package:electronicsstrore/data/repository/verifyotp_repo.dart';
 import 'package:electronicsstrore/data/repository/vrifyphone_repo.dart';
+import 'package:electronicsstrore/helper/local/cache_helper.dart';
 import 'package:electronicsstrore/helper/notification/notifications.dart';
 import 'package:electronicsstrore/utilities/router.dart';
 import 'package:electronicsstrore/utilities/routes.dart';
@@ -19,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().init();
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 
@@ -50,12 +52,12 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        BlocProvider(create: (context)=>HelpCubit(HelpRepository(HelpApi())))
+        BlocProvider(create: (context) => HelpCubit(HelpRepository(HelpApi())))
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerate,
-        initialRoute: AppRoutes.login,
+        initialRoute: AppRoutes.splash,
       ),
     );
   }

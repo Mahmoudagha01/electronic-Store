@@ -25,7 +25,6 @@ class _LoginState extends State<Login> {
       const CountryCode(name: 'Egypt', code: 'EG', dialCode: '+20');
   @override
   Widget build(BuildContext context) {
-    final loginData = BlocProvider.of<AuthCubit>(context).verifyPhoneModel;
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(

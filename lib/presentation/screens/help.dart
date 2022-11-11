@@ -67,12 +67,11 @@ class _HelpState extends State<Help> {
                                 headerBuilder:
                                     (BuildContext context, bool isExpanded) {
                                   return Container(
-                                    padding: EdgeInsets.all(15),
+                                    padding: const EdgeInsets.all(15),
                                     child: Text(
                                       state.data.help[index].question,
-                                      style: TextStyle(
-                                        color:
-                                            const Color.fromRGBO(7, 9, 77, 0.6),
+                                      style: const TextStyle(
+                                        color: Color.fromRGBO(7, 9, 77, 0.6),
                                         fontSize: 18,
                                       ),
                                     ),

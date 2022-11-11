@@ -1,14 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:electronicsstrore/data/API/verifyotp_api.dart';
 import 'package:electronicsstrore/helper/notification/notifications.dart';
 import 'package:electronicsstrore/presentation/widgets/TFF.dart';
 import 'package:electronicsstrore/utilities/routes.dart';
-
 import '../../business_logic/OtpAuth/otp_auth_cubit.dart';
+import '../../helper/local/cache_helper.dart';
 
 class OTP extends StatefulWidget {
   final String num;
@@ -181,6 +178,10 @@ class _OTPState extends State<OTP> {
                           ),
                         );
                         Navigator.pushReplacementNamed(context, AppRoutes.home);
+                        CacheHelper.saveDataSharedPreference(
+                          key: "isLoggedIn",
+                          value: true,
+                        );
                       } else if (state is OtpAuthError) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

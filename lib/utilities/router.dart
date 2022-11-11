@@ -3,13 +3,16 @@ import 'package:electronicsstrore/presentation/screens/help.dart';
 import 'package:electronicsstrore/presentation/screens/login.dart';
 import 'package:electronicsstrore/presentation/screens/otp.dart';
 import 'package:electronicsstrore/presentation/screens/productdetails.dart';
+import 'package:electronicsstrore/presentation/screens/splash.dart';
 import 'package:electronicsstrore/utilities/routes.dart';
 import 'package:flutter/material.dart';
-
 import '../presentation/screens/home.dart';
 
 Route<dynamic> onGenerate(RouteSettings settings) {
   switch (settings.name) {
+        case AppRoutes.splash:
+      return MaterialPageRoute(builder: (context) => const Splash());
+
     case AppRoutes.login:
       return MaterialPageRoute(builder: (context) => const Login());
 
@@ -29,7 +32,8 @@ Route<dynamic> onGenerate(RouteSettings settings) {
 
           case AppRoutes.help:
       return MaterialPageRoute(builder: (context) => const Help());
+
     default:
-      return MaterialPageRoute(builder: ((context) => const Login()));
+      return MaterialPageRoute(builder: ((context) => const Splash()));
   }
 }

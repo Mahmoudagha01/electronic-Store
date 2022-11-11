@@ -39,6 +39,7 @@ dependencies:
   flutter_local_notifications: ^12.0.3
   http: ^0.13.5
   lottie: ^1.4.3
+  shared_preferences: ^2.0.15
   
 
 dev_dependencies:

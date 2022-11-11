@@ -1,5 +1,6 @@
 import 'package:electronicsstrore/business_logic/Product/product_cubit.dart';
 import 'package:electronicsstrore/presentation/widgets/Carousel.dart';
+import 'package:electronicsstrore/presentation/widgets/category_card.dart';
 
 import 'package:electronicsstrore/presentation/widgets/header.dart';
 import 'package:electronicsstrore/utilities/routes.dart';
@@ -15,19 +16,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
-  final List<Map<String, String>> categories = const [
-    {"name": 'All', "image": "assets/images/cup.png"},
-    {"name": 'Acer', "image": "assets/images/predator.png"},
-    {"name": 'Razer', "image": "assets/images/razer.png"},
-    {"name": 'Apple', "image": "assets/images/ios.png"},
-  ];
-
-  @override
   void initState() {
     BlocProvider.of<ProductCubit>(context).getProducts();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -42,52 +36,10 @@ class _HomeState extends State<Home> {
               child: SizedBox(
                 height: 85,
                 child: ListView.builder(
-                    itemCount: categories.length,
+                    itemCount: 4,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 70,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        offset: Offset(1, 0),
-                                        spreadRadius: 0,
-                                        blurRadius: 4,
-                                        color: Colors.grey)
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          categories[index]["image"]!))),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              categories[index]["name"]!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(
-                                    color: const Color.fromRGBO(
-                                      7,
-                                      9,
-                                      77,
-                                      0.6,
-                                    ),
-                                  ),
-                            )
-                          ],
-                        ),
-                      );
+                      return CategoryCard(index: index);
                     }),
               ),
             ),

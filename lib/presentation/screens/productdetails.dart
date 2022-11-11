@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:electronicsstrore/data/models/product_model.dart';
 
 class ProductDetails extends StatefulWidget {
