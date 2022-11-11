@@ -30,6 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.0
+  carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
   fl_country_code_picker: ^0.0.4
   flutter:
@@ -38,7 +39,7 @@ dependencies:
   flutter_local_notifications: ^12.0.3
   http: ^0.13.5
   lottie: ^1.4.3
-  phone_number: ^1.0.0
+  
 
 dev_dependencies:
 

@@ -74,12 +74,12 @@ class _LoginState extends State<Login> {
               ),
               Container(
                 margin: const EdgeInsets.all(15.0),
-                padding: const EdgeInsets.all(1.0),
+                padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(color: const Color(0xFFD1D1D1))),
                 width: double.infinity,
-                height: 67,
+               
                 child: TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {

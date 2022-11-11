@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
     String hintText = '',
     TextInputType keyboardType = TextInputType.name,
     Widget? suffixIcon,
+    Widget? prefixIcon,
     void Function(String)? onChanged,
     String? Function(String?)? validator,
     double borderRadius = 10.0,
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
         _readOnly = readOnly,
         _validator = validator,
         _fillcolor = fillcolor,
+        _prefixIcon=prefixIcon,
         super(key: key);
 
   final TextEditingController? _controller;
@@ -39,13 +41,14 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputAction _textInputAction;
   final TextAlign _textAlign;
   final Widget? _suffixIcon;
+  final Widget? _prefixIcon;
   final bool _readOnly;
   final String? Function(String?)? _validator;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: _fillcolor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_borderRadius),
       ),
@@ -66,8 +69,9 @@ class CustomTextFormField extends StatelessWidget {
             fillColor: _fillcolor,
             hintText: _hintText,
             suffixIcon: _suffixIcon,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            contentPadding: const EdgeInsets.all(20)),
+            prefixIcon: _prefixIcon,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(_borderRadius)),
+            contentPadding: const EdgeInsets.all(10)),
       ),
     );
   }
