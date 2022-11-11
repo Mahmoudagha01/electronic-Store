@@ -1,10 +1,13 @@
 import 'package:electronicsstrore/business_logic/Auth/auth_cubit.dart';
+import 'package:electronicsstrore/business_logic/Help/help_cubit.dart';
 import 'package:electronicsstrore/business_logic/OtpAuth/otp_auth_cubit.dart';
 import 'package:electronicsstrore/business_logic/Product/product_cubit.dart';
-import 'package:electronicsstrore/data/API/getProduct.dart';
+import 'package:electronicsstrore/data/API/getHelp_api.dart';
+import 'package:electronicsstrore/data/API/getProduct_api.dart';
 import 'package:electronicsstrore/data/API/verifyotp_api.dart';
 import 'package:electronicsstrore/data/API/verifyphone_api.dart';
 import 'package:electronicsstrore/data/repository/getProduct_repo.dart';
+import 'package:electronicsstrore/data/repository/gethelp_repo.dart';
 import 'package:electronicsstrore/data/repository/verifyotp_repo.dart';
 import 'package:electronicsstrore/data/repository/vrifyphone_repo.dart';
 import 'package:electronicsstrore/helper/notification/notifications.dart';
@@ -47,6 +50,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        BlocProvider(create: (context)=>HelpCubit(HelpRepository(HelpApi())))
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,4 +1,5 @@
 import 'package:electronicsstrore/presentation/widgets/TFF.dart';
+import 'package:electronicsstrore/utilities/routes.dart';
 import 'package:flutter/material.dart';
 
 class HeaderBuilder extends StatelessWidget {
@@ -19,7 +20,6 @@ class HeaderBuilder extends StatelessWidget {
               hintText: "Search In Electronics",
               fillcolor: Colors.grey[100],
               borderRadius: 30,
-              
             ),
           ),
         ),
@@ -34,7 +34,7 @@ class HeaderBuilder extends StatelessWidget {
             color: Colors.grey[100],
             child: IconButton(
               onPressed: () {
-                
+                Navigator.pushNamed(context, AppRoutes.help);
               },
               icon: const Icon(
                 Icons.tune_rounded,

@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 import 'package:electronicsstrore/data/repository/getProduct_repo.dart';
 
-import '../../data/models/product.dart';
+import '../../data/models/product_model.dart';
 
 part 'product_state.dart';
 
