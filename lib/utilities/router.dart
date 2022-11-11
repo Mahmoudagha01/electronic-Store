@@ -1,5 +1,7 @@
+import 'package:electronicsstrore/data/models/product.dart';
 import 'package:electronicsstrore/presentation/screens/login.dart';
 import 'package:electronicsstrore/presentation/screens/otp.dart';
+import 'package:electronicsstrore/presentation/screens/productdetails.dart';
 import 'package:electronicsstrore/utilities/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +16,14 @@ Route<dynamic> onGenerate(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => Home());
 
     case AppRoutes.otp:
-    
-      final phone = settings.arguments as String ;
-      final code = settings.arguments as String ;
-      return MaterialPageRoute(builder: (context) => OTP(num: phone,code: code));
-
+      final phone = settings.arguments as String;
+      final code = settings.arguments as String;
+      return MaterialPageRoute(
+          builder: (context) => OTP(num: phone, code: code));
+    case AppRoutes.details:
+      final product = settings.arguments as Product;
+      return MaterialPageRoute(
+          builder: (context) => ProductDetails(product: product));
     default:
       return MaterialPageRoute(builder: ((context) => Home()));
   }

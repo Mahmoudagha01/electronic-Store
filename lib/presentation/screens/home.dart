@@ -2,6 +2,7 @@ import 'package:electronicsstrore/business_logic/Product/product_cubit.dart';
 import 'package:electronicsstrore/presentation/widgets/Carousel.dart';
 
 import 'package:electronicsstrore/presentation/widgets/header.dart';
+import 'package:electronicsstrore/utilities/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,7 @@ class _HomeState extends State<Home> {
     {"name": 'Razer', "image": "assets/images/razer.png"},
     {"name": 'Apple', "image": "assets/images/ios.png"},
   ];
+
   @override
   void initState() {
     BlocProvider.of<ProductCubit>(context).getProducts();
@@ -66,7 +68,7 @@ class _HomeState extends State<Home> {
                                       image: AssetImage(
                                           categories[index]["image"]!))),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 6,
                             ),
                             Text(
@@ -134,103 +136,110 @@ class _HomeState extends State<Home> {
                                 crossAxisCount: 2,
                                 childAspectRatio: 0.7),
                         itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: const Color.fromRGBO(242, 242, 242, 1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Stack(children: [
-                              
-                              Positioned(
-                                right: 0,
-                                bottom: 0,
-                                child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(
-                                          15,
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, AppRoutes.details,
+                                  arguments: state.data.products[index]);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(242, 242, 242, 1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Stack(children: [
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(
+                                            15,
+                                          ),
+                                          topLeft: Radius.circular(
+                                            6,
+                                          ),
                                         ),
-                                        topLeft: Radius.circular(
-                                          6,
+                                        color: Color.fromRGBO(
+                                          7,
+                                          9,
+                                          77,
+                                          0.6,
                                         ),
                                       ),
-                                      color: Color.fromRGBO(
-                                        7,
-                                        9,
-                                        77,
-                                        0.6,
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                      )),
+                                ),
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image: NetworkImage(state.data
+                                                  .products[index].image))),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
                                       ),
-                                    ),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                    )),
-                              ),
-                              Column(
-                                children: [
-                                  Container(
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        image: DecorationImage(
-                                            image: NetworkImage(state
-                                                .data.products[index].image))),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          state.data.products[index].company,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6!
-                                              .copyWith(
-                                                color: const Color.fromRGBO(
-                                                  7,
-                                                  9,
-                                                  77,
-                                                  0.6,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            state.data.products[index].company,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6!
+                                                .copyWith(
+                                                  color: const Color.fromRGBO(
+                                                    7,
+                                                    9,
+                                                    77,
+                                                    0.6,
+                                                  ),
                                                 ),
-                                              ),
-                                        ),
-                                      ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(state.data.products[index].name),
+                                        ],
+                                      ),
                                     ),
-                                    child: Row(
-                                      children: [
-                                         Text(state.data.products[index].name),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 8,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                              "${state.data.products[index].price} EGP"),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 8,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                         Text("${state.data.products[index].price} EGP"),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Positioned(
-                                right: 0,
-                                child: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                        Icons.favorite_border_outlined)),
-                              ),
-                            ]),
+                                  ],
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                          Icons.favorite_border_outlined)),
+                                ),
+                              ]),
+                            ),
                           );
                         }),
                   ));
