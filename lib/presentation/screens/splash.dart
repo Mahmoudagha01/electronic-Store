@@ -17,8 +17,8 @@ class _SplashState extends State<Splash> {
       bool? isLogged =
           await CacheHelper.getDataFromSharedPreference(key: "isLoggedIn");
       isLogged != null
-          ? Navigator.pushNamed(context, AppRoutes.home)
-          : Navigator.pushNamed(context, AppRoutes.login);
+          ? Navigator.pushReplacementNamed(context, AppRoutes.home)
+          : Navigator.pushReplacementNamed(context, AppRoutes.login);
     });
     super.initState();
   }

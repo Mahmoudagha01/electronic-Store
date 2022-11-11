@@ -37,7 +37,7 @@ class HeaderBuilder extends StatelessWidget {
                 Navigator.pushNamed(context, AppRoutes.help);
               },
               icon: const Icon(
-                Icons.tune_rounded,
+                Icons.settings,
               ),
             ),
           ),

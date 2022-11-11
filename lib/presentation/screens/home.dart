@@ -1,6 +1,5 @@
 import 'package:electronicsstrore/business_logic/Product/product_cubit.dart';
 import 'package:electronicsstrore/presentation/widgets/Carousel.dart';
-import 'package:electronicsstrore/presentation/widgets/category_card.dart';
 
 import 'package:electronicsstrore/presentation/widgets/header.dart';
 import 'package:electronicsstrore/utilities/routes.dart';
@@ -15,6 +14,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final List<Map<String, dynamic>> categories = [
+    {
+      "name": 'All',
+      "image": "assets/images/cup.png",
+      "isSelected": true,
+    },
+    {
+      "name": 'Acer',
+      "image": "assets/images/predator.png",
+      "isSelected": false,
+    },
+    {
+      "name": 'Razer',
+      "image": "assets/images/razer.png",
+      "isSelected": false,
+    },
+    {
+      "name": 'Apple',
+      "image": "assets/images/ios.png",
+      "isSelected": false,
+    },
+  ];
+  int currentIndex = 0;
+
   @override
   void initState() {
     BlocProvider.of<ProductCubit>(context).getProducts();
@@ -36,10 +59,64 @@ class _HomeState extends State<Home> {
               child: SizedBox(
                 height: 85,
                 child: ListView.builder(
-                    itemCount: 4,
+                    itemCount: categories.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return CategoryCard(index: index);
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            categories[currentIndex]["isSelected"] = false;
+                            currentIndex = index;
+                            categories[currentIndex]["isSelected"] = true;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 70,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    boxShadow: const [
+                                      BoxShadow(
+                                          offset: Offset(1, 0),
+                                          spreadRadius: 0,
+                                          blurRadius: 4,
+                                          color: Colors.grey)
+                                    ],
+                                    color: categories[index]["isSelected"]
+                                        ? const Color.fromARGB(
+                                            153, 134, 134, 151)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            categories[index]["image"]!))),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                categories[index]["name"]!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
+                                      color: const Color.fromRGBO(
+                                        7,
+                                        9,
+                                        77,
+                                        0.6,
+                                      ),
+                                    ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
                     }),
               ),
             ),
@@ -74,7 +151,13 @@ class _HomeState extends State<Home> {
             BlocBuilder<ProductCubit, ProductState>(
               builder: (context, state) {
                 if (state is Productloading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Column(
+                    children: [
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.25-100),
+                      const Center(child: CircularProgressIndicator()),
+                    ],
+                  );
                 } else if (state is Productloaded) {
                   return Expanded(
                       child: Padding(
@@ -120,15 +203,16 @@ class _HomeState extends State<Home> {
                                           0.6,
                                         ),
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.add,
                                         color: Colors.white,
                                       )),
                                 ),
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      height: 200,
+                                      height: 190,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(15),
@@ -140,46 +224,37 @@ class _HomeState extends State<Home> {
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 8,
                                       ),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            state.data.products[index].company,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6!
-                                                .copyWith(
-                                                  color: const Color.fromRGBO(
-                                                    7,
-                                                    9,
-                                                    77,
-                                                    0.6,
-                                                  ),
-                                                ),
-                                          ),
-                                        ],
+                                      child: Text(
+                                        state.data.products[index].company,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .copyWith(
+                                              color: const Color.fromRGBO(
+                                                7,
+                                                9,
+                                                77,
+                                                0.6,
+                                              ),
+                                            ),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 8,
                                       ),
-                                      child: Row(
-                                        children: [
-                                          Text(state.data.products[index].name),
-                                        ],
+                                      child: FittedBox(
+                                        child: Text(
+                                            state.data.products[index].name),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                        vertical: 10,
+                                        vertical: 8,
                                         horizontal: 8,
                                       ),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                              "${state.data.products[index].price} EGP"),
-                                        ],
-                                      ),
+                                      child: Text(
+                                          "${state.data.products[index].price} EGP"),
                                     ),
                                   ],
                                 ),

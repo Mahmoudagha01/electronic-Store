@@ -92,7 +92,13 @@ class _HelpState extends State<Help> {
                     ),
                   );
                 } else if (state is HelpLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Column(
+                    children: [
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.5-100),
+                      const Center(child: CircularProgressIndicator()),
+                    ],
+                  );
                 } else if (state is HelpError) {
                   return Center(child: Text(state.message));
                 } else {
